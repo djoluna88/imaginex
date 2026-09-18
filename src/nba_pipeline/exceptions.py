@@ -15,3 +15,11 @@ class SchemaDriftError(PipelineError):
 
 class EmptySourceError(PipelineError):
     """The file exists but carries no rows."""
+
+
+class UnknownSnapshotError(PipelineError):
+    """A version value in the data has no snapshot date configured in SNAPSHOT_DATES."""
+
+
+class ValidationError(PipelineError):
+    """Rows failed quality rules and the run was configured to stop on that."""
