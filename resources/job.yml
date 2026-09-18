@@ -1,0 +1,35 @@
+resources:
+  jobs:
+    nba_pipeline:
+      name: nba-players-pipeline
+
+      parameters:
+        - name: source_file
+          default: nba2k-full.csv
+
+      environments:
+        - environment_key: default
+          spec:
+            client: "2"           # without dependencies: pandas y pyspark are already included into serverless
+
+      tasks:
+        - task_key: bronze
+          environment_key: default
+          spark_python_task:
+            python_file: ../jobs/bronze_job.py
+            parameters:
+              - "--src-dir"
+              - ${workspace.file_path}/src
+              - "--catalog"
+              - ${var.catalog}
+              - "--raw-dir"
+              - /Volumes/${var.catalog}/nba/source_data
+              - "--source-file"
+              - "{{job.parameters.source_file}}"
+
+        # - task_key: silver
+        #   depends_on: [{ task_key: bronze }]
+        #   environment_key: default
+        #   spark_python_task:
+        #     python_file: ../jobs/silver_job.py
+        #     parameters: ["--catalog", "${var.catalog}"]

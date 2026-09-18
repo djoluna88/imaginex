@@ -1,0 +1,18 @@
+bundle:
+  name: nba-players-pipeline
+
+include:
+  - resources/*.yml
+
+variables:
+  catalog:
+    default: workspace
+
+targets:
+  dev:
+    default: true
+    mode: development
+    presets:
+      name_prefix: ""
+    workspace:
+      host: https://dbc-32226ed4-84c3.cloud.databricks.com
