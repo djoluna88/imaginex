@@ -18,10 +18,9 @@ log = logging.getLogger(__name__)
 
 def run_bronze(spark: SparkSession, cfg: BronzeConfig) -> BronzeStats:
     """
-    Carga un archivo fuente a bronze tal cual llegó.
+    Load file data without any modification.
 
-    Idempotente: correr dos veces con el mismo source_file deja la tabla igual,
-    porque write_bronze reemplaza solo las filas de ese archivo.
+    Idempotent property, see write_bronze from load.py
 
     Raise:
         SchemaDriftError   if the CSV header doesn't match with RAW_COLUMNS
