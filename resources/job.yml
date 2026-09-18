@@ -6,6 +6,8 @@ resources:
       parameters:
         - name: source_file
           default: nba2k-full.csv
+        - name: on_failure
+          default: quarantine
 
       environments:
         - environment_key: default
@@ -27,9 +29,17 @@ resources:
               - "--source-file"
               - "{{job.parameters.source_file}}"
 
-        # - task_key: silver
-        #   depends_on: [{ task_key: bronze }]
-        #   environment_key: default
-        #   spark_python_task:
-        #     python_file: ../jobs/silver_job.py
-        #     parameters: ["--catalog", "${var.catalog}"]
+        - task_key: silver
+          depends_on: [{ task_key: bronze }]
+          environment_key: default
+          spark_python_task:
+            python_file: ../jobs/silver_job.py
+            parameters: 
+              - "--src-dir"
+              - ${workspace.file_path}/src
+              - "--catalog"
+              - ${var.catalog}
+              - "--source-file"
+              - "{{job.parameters.source_file}}"  
+              - "--on-failure"
+              - "{{job.parameters.on_failure}}"
