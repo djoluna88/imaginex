@@ -77,4 +77,4 @@ def main() -> int:
 if __name__ == "__main__":
     exit_code = main()
     if exit_code != 0:
-        sys.exit(exit_code)   # Handle general error
+        sys.exit(exit_code)
