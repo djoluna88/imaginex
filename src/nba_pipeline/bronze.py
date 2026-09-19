@@ -1,9 +1,9 @@
 """
-Bronze layer: Raw data
+Bronze layer: raw copy of the source file.
 
-Goal: orchestrating bronze layer in general.
-Reading process is located in extract.py
-Writting process is located in load.py
+This module only orchestrates. The work happens in:
+  extract.py   reading the CSV as text
+  load.py      writing the bronze table
 """
 import logging
 import time
@@ -18,13 +18,14 @@ log = logging.getLogger(__name__)
 
 def run_bronze(spark: SparkSession, cfg: BronzeConfig) -> BronzeStats:
     """
-    Load file data without any modification.
+    Load one source file into bronze exactly as it arrived.
 
-    Idempotent property, see write_bronze from load.py
+    Idempotent: write_bronze replaces only the rows that belong to this source_file,
+    so running twice with the same file leaves the table unchanged.
 
-    Raise:
-        SchemaDriftError   if the CSV header doesn't match with RAW_COLUMNS
-        EmptySourceError   if the file doesn't have raw data
+    Raises:
+        SchemaDriftError   the CSV header does not match RAW_COLUMNS
+        EmptySourceError   the file has no data rows
     """
     t0 = time.perf_counter()
     log.info("bronze start | file=%s -> table=%s | load_id=%s", cfg.path, cfg.fq_table, cfg.load_id)
