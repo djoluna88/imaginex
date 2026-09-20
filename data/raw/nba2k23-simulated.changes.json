@@ -1,0 +1,2712 @@
+{
+  "source": "nba2k-full.csv",
+  "output": "nba2k23-simulated.csv",
+  "version": "NBA2k23",
+  "snapshot_date": "2022-09-09",
+  "seed": 20220909,
+  "how_to_reproduce": "python -m nba_pipeline.simulate --version NBA2k23 --seed 20220909",
+  "summary": {
+    "base_players": 429,
+    "rows_written": 439,
+    "players_removed": 14,
+    "players_added": 20,
+    "players_modified": 209,
+    "players_unchanged_in_file": 206,
+    "quality_issue_rows": 7,
+    "changes_by_scenario": {
+      "name_respelled": 3,
+      "new_contract": 42,
+      "position_change": 2,
+      "rating_change": 124,
+      "released": 11,
+      "signed": 24,
+      "trade": 58,
+      "weight_change": 21,
+      "whitespace_noise": 4
+    },
+    "removed_by_reason": {
+      "left_league": 8,
+      "retired": 6
+    },
+    "added_by_scenario": {
+      "rookie": 18,
+      "undrafted_signing": 2
+    },
+    "quality_issues_by_scenario": {
+      "conflicting_duplicate": 1,
+      "draft_inconsistent": 1,
+      "duplicate_row": 1,
+      "inherited_from_source": 1,
+      "jersey_out_of_range": 1,
+      "missing_identity": 1,
+      "salary_invalid": 1
+    }
+  },
+  "expected_pipeline_results": {
+    "silver_players_rows": 431,
+    "silver_players_quarantine_rows": 8,
+    "quarantine_failures_by_rule": {
+      "age_out_of_range": 1,
+      "conflicting_duplicate": 2,
+      "draft_inconsistent": 2,
+      "duplicate_row": 2,
+      "jersey_out_of_range": 1,
+      "missing_identity": 1,
+      "salary_invalid": 1
+    },
+    "gold_change_type": {
+      "new": 20,
+      "modified": 209,
+      "unchanged": 202
+    },
+    "known_players_absent_from_gold": 17
+  },
+  "removed": [
+    {
+      "full_name": "JJ Redick",
+      "b_day": "06/24/84",
+      "scenario": "retired",
+      "field": "age",
+      "old": "38",
+      "new": ""
+    },
+    {
+      "full_name": "Andre Iguodala",
+      "b_day": "01/28/84",
+      "scenario": "retired",
+      "field": "age",
+      "old": "38",
+      "new": ""
+    },
+    {
+      "full_name": "Jose Juan Barea",
+      "b_day": "06/26/84",
+      "scenario": "retired",
+      "field": "age",
+      "old": "38",
+      "new": ""
+    },
+    {
+      "full_name": "Pau Gasol",
+      "b_day": "07/06/80",
+      "scenario": "retired",
+      "field": "age",
+      "old": "42",
+      "new": ""
+    },
+    {
+      "full_name": "Kyle Korver",
+      "b_day": "03/17/81",
+      "scenario": "retired",
+      "field": "age",
+      "old": "41",
+      "new": ""
+    },
+    {
+      "full_name": "Tyson Chandler",
+      "b_day": "10/02/82",
+      "scenario": "retired",
+      "field": "age",
+      "old": "39",
+      "new": ""
+    },
+    {
+      "full_name": "Amile Jefferson",
+      "b_day": "05/07/93",
+      "scenario": "left_league",
+      "field": "rating",
+      "old": "69",
+      "new": ""
+    },
+    {
+      "full_name": "Tyrone Wallace",
+      "b_day": "06/10/94",
+      "scenario": "left_league",
+      "field": "rating",
+      "old": "69",
+      "new": ""
+    },
+    {
+      "full_name": "Devonte Graham",
+      "b_day": "02/22/95",
+      "scenario": "left_league",
+      "field": "rating",
+      "old": "69",
+      "new": ""
+    },
+    {
+      "full_name": "Terance Mann",
+      "b_day": "10/18/96",
+      "scenario": "left_league",
+      "field": "rating",
+      "old": "69",
+      "new": ""
+    },
+    {
+      "full_name": "Duncan Robinson",
+      "b_day": "04/22/94",
+      "scenario": "left_league",
+      "field": "rating",
+      "old": "67",
+      "new": ""
+    },
+    {
+      "full_name": "Tony Bradley",
+      "b_day": "01/08/98",
+      "scenario": "left_league",
+      "field": "rating",
+      "old": "70",
+      "new": ""
+    },
+    {
+      "full_name": "Abdel Nader",
+      "b_day": "09/25/93",
+      "scenario": "left_league",
+      "field": "rating",
+      "old": "70",
+      "new": ""
+    },
+    {
+      "full_name": "Hamidou Diallo",
+      "b_day": "07/31/98",
+      "scenario": "left_league",
+      "field": "rating",
+      "old": "70",
+      "new": ""
+    }
+  ],
+  "added": [
+    {
+      "full_name": "Deni Okoro",
+      "b_day": "04/15/02",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "4"
+    },
+    {
+      "full_name": "Cameron Achebe",
+      "b_day": "03/12/02",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "5"
+    },
+    {
+      "full_name": "Nikola Kimani",
+      "b_day": "02/08/03",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "10"
+    },
+    {
+      "full_name": "Luka Nakamura",
+      "b_day": "03/05/01",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "11"
+    },
+    {
+      "full_name": "Kobe Vasquez",
+      "b_day": "08/08/00",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "13"
+    },
+    {
+      "full_name": "Tariq Whitfield",
+      "b_day": "03/16/03",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "15"
+    },
+    {
+      "full_name": "Trey Ferreira",
+      "b_day": "09/04/00",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "16"
+    },
+    {
+      "full_name": "Marcus Whitfield",
+      "b_day": "07/20/03",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "19"
+    },
+    {
+      "full_name": "Mateo Winslow",
+      "b_day": "02/19/02",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "28"
+    },
+    {
+      "full_name": "Marcus Delacroix",
+      "b_day": "09/06/02",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "32"
+    },
+    {
+      "full_name": "Andre Delacroix",
+      "b_day": "03/22/02",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "37"
+    },
+    {
+      "full_name": "Andre Ferreira",
+      "b_day": "06/06/03",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "38"
+    },
+    {
+      "full_name": "Luka Radulovic",
+      "b_day": "05/11/01",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "41"
+    },
+    {
+      "full_name": "Isaiah Holloway",
+      "b_day": "02/17/02",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "42"
+    },
+    {
+      "full_name": "Emeka Adebayo",
+      "b_day": "11/03/02",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "44"
+    },
+    {
+      "full_name": "Mateo Delacroix",
+      "b_day": "04/01/03",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "48"
+    },
+    {
+      "full_name": "Tariq Sablan",
+      "b_day": "05/09/00",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "54"
+    },
+    {
+      "full_name": "Ousmane Marchetti",
+      "b_day": "05/15/03",
+      "scenario": "rookie",
+      "field": "draft_peak",
+      "old": "",
+      "new": "57"
+    },
+    {
+      "full_name": "Emeka Brannigan",
+      "b_day": "08/09/97",
+      "scenario": "undrafted_signing",
+      "field": "country",
+      "old": "",
+      "new": "Serbia"
+    },
+    {
+      "full_name": "Trey Mbeki",
+      "b_day": "04/24/94",
+      "scenario": "undrafted_signing",
+      "field": "country",
+      "old": "",
+      "new": "Canada"
+    }
+  ],
+  "changes": [
+    {
+      "full_name": "Chuma Okeke",
+      "b_day": "08/18/98",
+      "scenario": "signed",
+      "field": "team",
+      "old": "",
+      "new": "Brooklyn Nets"
+    },
+    {
+      "full_name": "Chuma Okeke",
+      "b_day": "08/18/98",
+      "scenario": "signed",
+      "field": "salary",
+      "old": "$2773550",
+      "new": "$5075825"
+    },
+    {
+      "full_name": "Allonzo Trier",
+      "b_day": "01/17/96",
+      "scenario": "signed",
+      "field": "team",
+      "old": "",
+      "new": "Chicago Bulls"
+    },
+    {
+      "full_name": "Allonzo Trier",
+      "b_day": "01/17/96",
+      "scenario": "signed",
+      "field": "salary",
+      "old": "$3551100",
+      "new": "$4023056"
+    },
+    {
+      "full_name": "Henry Ellenson",
+      "b_day": "01/13/97",
+      "scenario": "signed",
+      "field": "team",
+      "old": "",
+      "new": "Charlotte Hornets"
+    },
+    {
+      "full_name": "Henry Ellenson",
+      "b_day": "01/13/97",
+      "scenario": "signed",
+      "field": "salary",
+      "old": "$79568",
+      "new": "$3682000"
+    },
+    {
+      "full_name": "Deyonta Davis",
+      "b_day": "12/02/96",
+      "scenario": "signed",
+      "field": "team",
+      "old": "",
+      "new": "Atlanta Hawks"
+    },
+    {
+      "full_name": "Deyonta Davis",
+      "b_day": "12/02/96",
+      "scenario": "signed",
+      "field": "salary",
+      "old": "$250000",
+      "new": "$1986286"
+    },
+    {
+      "full_name": "Isaiah Hartenstein",
+      "b_day": "05/05/98",
+      "scenario": "signed",
+      "field": "team",
+      "old": "",
+      "new": "Miami Heat"
+    },
+    {
+      "full_name": "Isaiah Hartenstein",
+      "b_day": "05/05/98",
+      "scenario": "signed",
+      "field": "salary",
+      "old": "$1416852",
+      "new": "$2395197"
+    },
+    {
+      "full_name": "Chandler Parsons",
+      "b_day": "10/25/88",
+      "scenario": "signed",
+      "field": "team",
+      "old": "",
+      "new": "Utah Jazz"
+    },
+    {
+      "full_name": "Chandler Parsons",
+      "b_day": "10/25/88",
+      "scenario": "signed",
+      "field": "salary",
+      "old": "$25102512",
+      "new": "$4969026"
+    },
+    {
+      "full_name": "Antonio Blakeney",
+      "b_day": "10/04/96",
+      "scenario": "signed",
+      "field": "team",
+      "old": "",
+      "new": "Sacramento Kings"
+    },
+    {
+      "full_name": "Antonio Blakeney",
+      "b_day": "10/04/96",
+      "scenario": "signed",
+      "field": "salary",
+      "old": "$1488231",
+      "new": "$3114521"
+    },
+    {
+      "full_name": "Gerald Green",
+      "b_day": "01/26/86",
+      "scenario": "signed",
+      "field": "team",
+      "old": "",
+      "new": "Toronto Raptors"
+    },
+    {
+      "full_name": "Gerald Green",
+      "b_day": "01/26/86",
+      "scenario": "signed",
+      "field": "salary",
+      "old": "$2564753",
+      "new": "$2508598"
+    },
+    {
+      "full_name": "DeMarcus Cousins",
+      "b_day": "08/13/90",
+      "scenario": "signed",
+      "field": "team",
+      "old": "",
+      "new": "Los Angeles Lakers"
+    },
+    {
+      "full_name": "DeMarcus Cousins",
+      "b_day": "08/13/90",
+      "scenario": "signed",
+      "field": "salary",
+      "old": "$3500000",
+      "new": "$5534479"
+    },
+    {
+      "full_name": "Tyler Lydon",
+      "b_day": "04/09/96",
+      "scenario": "signed",
+      "field": "team",
+      "old": "",
+      "new": "Milwaukee Bucks"
+    },
+    {
+      "full_name": "Tyler Lydon",
+      "b_day": "04/09/96",
+      "scenario": "signed",
+      "field": "salary",
+      "old": "$50000",
+      "new": "$5962872"
+    },
+    {
+      "full_name": "Ivan Rabb",
+      "b_day": "02/04/97",
+      "scenario": "signed",
+      "field": "team",
+      "old": "",
+      "new": "Philadelphia 76ers"
+    },
+    {
+      "full_name": "Ivan Rabb",
+      "b_day": "02/04/97",
+      "scenario": "signed",
+      "field": "salary",
+      "old": "$451326",
+      "new": "$3773517"
+    },
+    {
+      "full_name": "CJ Miles",
+      "b_day": "03/18/87",
+      "scenario": "signed",
+      "field": "team",
+      "old": "",
+      "new": "San Antonio Spurs"
+    },
+    {
+      "full_name": "CJ Miles",
+      "b_day": "03/18/87",
+      "scenario": "signed",
+      "field": "salary",
+      "old": "$8730158",
+      "new": "$3483840"
+    },
+    {
+      "full_name": "Blake Griffin",
+      "b_day": "03/16/89",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Detroit Pistons",
+      "new": "Charlotte Hornets"
+    },
+    {
+      "full_name": "Eric Paschall",
+      "b_day": "11/04/96",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Golden State Warriors",
+      "new": "Atlanta Hawks"
+    },
+    {
+      "full_name": "Eric Paschall",
+      "b_day": "11/04/96",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#7",
+      "new": "#41"
+    },
+    {
+      "full_name": "Jabari Parker",
+      "b_day": "03/15/95",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Sacramento Kings",
+      "new": "Milwaukee Bucks"
+    },
+    {
+      "full_name": "Jabari Parker",
+      "b_day": "03/15/95",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#0",
+      "new": "#27"
+    },
+    {
+      "full_name": "Patrick Mills",
+      "b_day": "08/11/88",
+      "scenario": "trade",
+      "field": "team",
+      "old": "San Antonio Spurs",
+      "new": "Toronto Raptors"
+    },
+    {
+      "full_name": "Quinn Cook",
+      "b_day": "03/23/93",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Los Angeles Lakers",
+      "new": "Miami Heat"
+    },
+    {
+      "full_name": "Enes Kanter",
+      "b_day": "05/20/92",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Boston Celtics",
+      "new": "Toronto Raptors"
+    },
+    {
+      "full_name": "Luke Kennard",
+      "b_day": "06/24/96",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Detroit Pistons",
+      "new": "Oklahoma City Thunder"
+    },
+    {
+      "full_name": "TJ McConnell",
+      "b_day": "03/25/92",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Indiana Pacers",
+      "new": "Detroit Pistons"
+    },
+    {
+      "full_name": "Luka Samanic",
+      "b_day": "01/09/00",
+      "scenario": "trade",
+      "field": "team",
+      "old": "San Antonio Spurs",
+      "new": "New York Knicks"
+    },
+    {
+      "full_name": "Admiral Schofield",
+      "b_day": "03/30/97",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Washington Wizards",
+      "new": "Golden State Warriors"
+    },
+    {
+      "full_name": "Royce O'Neale",
+      "b_day": "06/05/93",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Utah Jazz",
+      "new": "New Orleans Pelicans"
+    },
+    {
+      "full_name": "Royce O'Neale",
+      "b_day": "06/05/93",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#23",
+      "new": "#36"
+    },
+    {
+      "full_name": "Jacob Evans",
+      "b_day": "06/18/97",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Minnesota Timberwolves",
+      "new": "Los Angeles Clippers"
+    },
+    {
+      "full_name": "Jacob Evans",
+      "b_day": "06/18/97",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#0",
+      "new": "#28"
+    },
+    {
+      "full_name": "Ben McLemore",
+      "b_day": "02/11/93",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Houston Rockets",
+      "new": "Charlotte Hornets"
+    },
+    {
+      "full_name": "Ben McLemore",
+      "b_day": "02/11/93",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#16",
+      "new": "#18"
+    },
+    {
+      "full_name": "Brook Lopez",
+      "b_day": "04/01/88",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Milwaukee Bucks",
+      "new": "Atlanta Hawks"
+    },
+    {
+      "full_name": "DJ Wilson",
+      "b_day": "02/19/96",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Milwaukee Bucks",
+      "new": "Detroit Pistons"
+    },
+    {
+      "full_name": "Edmond Sumner",
+      "b_day": "12/13/95",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Indiana Pacers",
+      "new": "Portland Trail Blazers"
+    },
+    {
+      "full_name": "Edmond Sumner",
+      "b_day": "12/13/95",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#5",
+      "new": "#55"
+    },
+    {
+      "full_name": "Tyler Johnson",
+      "b_day": "05/07/92",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Brooklyn Nets",
+      "new": "Utah Jazz"
+    },
+    {
+      "full_name": "Tyler Johnson",
+      "b_day": "05/07/92",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#0",
+      "new": "#26"
+    },
+    {
+      "full_name": "Tyler Herro",
+      "b_day": "01/20/00",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Miami Heat",
+      "new": "Orlando Magic"
+    },
+    {
+      "full_name": "Paul Millsap",
+      "b_day": "02/10/85",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Denver Nuggets",
+      "new": "Indiana Pacers"
+    },
+    {
+      "full_name": "Paul Millsap",
+      "b_day": "02/10/85",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#4",
+      "new": "#49"
+    },
+    {
+      "full_name": "Mario Hezonja",
+      "b_day": "02/25/95",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Portland Trail Blazers",
+      "new": "Orlando Magic"
+    },
+    {
+      "full_name": "Damian Lillard",
+      "b_day": "07/15/90",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Portland Trail Blazers",
+      "new": "Cleveland Cavaliers"
+    },
+    {
+      "full_name": "Damian Lillard",
+      "b_day": "07/15/90",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#0",
+      "new": "#6"
+    },
+    {
+      "full_name": "Ricky Rubio",
+      "b_day": "10/21/90",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Phoenix Suns",
+      "new": "Memphis Grizzlies"
+    },
+    {
+      "full_name": "Ricky Rubio",
+      "b_day": "10/21/90",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#11",
+      "new": "#43"
+    },
+    {
+      "full_name": "Marcus Morris",
+      "b_day": "09/02/89",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Los Angeles Clippers",
+      "new": "Boston Celtics"
+    },
+    {
+      "full_name": "Landry Shamet",
+      "b_day": "03/13/97",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Los Angeles Clippers",
+      "new": "Charlotte Hornets"
+    },
+    {
+      "full_name": "Landry Shamet",
+      "b_day": "03/13/97",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#20",
+      "new": "#10"
+    },
+    {
+      "full_name": "E'Twaun Moore",
+      "b_day": "02/25/89",
+      "scenario": "trade",
+      "field": "team",
+      "old": "New Orleans Pelicans",
+      "new": "Dallas Mavericks"
+    },
+    {
+      "full_name": "Ignas Brazdeikis",
+      "b_day": "01/08/99",
+      "scenario": "trade",
+      "field": "team",
+      "old": "New York Knicks",
+      "new": "Brooklyn Nets"
+    },
+    {
+      "full_name": "Ignas Brazdeikis",
+      "b_day": "01/08/99",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#17",
+      "new": "#23"
+    },
+    {
+      "full_name": "Daniel Theis",
+      "b_day": "04/04/92",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Boston Celtics",
+      "new": "Indiana Pacers"
+    },
+    {
+      "full_name": "Daniel Theis",
+      "b_day": "04/04/92",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#27",
+      "new": "#28"
+    },
+    {
+      "full_name": "PJ Washington",
+      "b_day": "08/23/98",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Charlotte Hornets",
+      "new": "Memphis Grizzlies"
+    },
+    {
+      "full_name": "PJ Washington",
+      "b_day": "08/23/98",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#25",
+      "new": "#35"
+    },
+    {
+      "full_name": "Isaac Bonga",
+      "b_day": "11/08/99",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Washington Wizards",
+      "new": "Philadelphia 76ers"
+    },
+    {
+      "full_name": "Isaac Bonga",
+      "b_day": "11/08/99",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#17",
+      "new": "#34"
+    },
+    {
+      "full_name": "Kevin Huerter",
+      "b_day": "08/27/98",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Atlanta Hawks",
+      "new": "San Antonio Spurs"
+    },
+    {
+      "full_name": "Reggie Jackson",
+      "b_day": "04/16/90",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Los Angeles Clippers",
+      "new": "Denver Nuggets"
+    },
+    {
+      "full_name": "Sviatoslav Mykhailiuk",
+      "b_day": "06/10/97",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Detroit Pistons",
+      "new": "Brooklyn Nets"
+    },
+    {
+      "full_name": "Brad Wanamaker",
+      "b_day": "07/25/89",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Boston Celtics",
+      "new": "Chicago Bulls"
+    },
+    {
+      "full_name": "Brad Wanamaker",
+      "b_day": "07/25/89",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#9",
+      "new": "#3"
+    },
+    {
+      "full_name": "Maxi Kleber",
+      "b_day": "01/29/92",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Dallas Mavericks",
+      "new": "San Antonio Spurs"
+    },
+    {
+      "full_name": "Maxi Kleber",
+      "b_day": "01/29/92",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#42",
+      "new": "#16"
+    },
+    {
+      "full_name": "Jonas Valanciunas",
+      "b_day": "05/06/92",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Memphis Grizzlies",
+      "new": "Charlotte Hornets"
+    },
+    {
+      "full_name": "Jonas Valanciunas",
+      "b_day": "05/06/92",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#17",
+      "new": "#36"
+    },
+    {
+      "full_name": "Chris Paul",
+      "b_day": "05/06/85",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Oklahoma City Thunder",
+      "new": "Sacramento Kings"
+    },
+    {
+      "full_name": "KZ Okpala",
+      "b_day": "04/28/99",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Miami Heat",
+      "new": "New York Knicks"
+    },
+    {
+      "full_name": "KZ Okpala",
+      "b_day": "04/28/99",
+      "scenario": "trade",
+      "field": "jersey",
+      "old": "#4",
+      "new": "#40"
+    },
+    {
+      "full_name": "Jordan McRae",
+      "b_day": "03/28/91",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Detroit Pistons",
+      "new": "Cleveland Cavaliers"
+    },
+    {
+      "full_name": "LeBron James",
+      "b_day": "12/30/84",
+      "scenario": "trade",
+      "field": "team",
+      "old": "Los Angeles Lakers",
+      "new": "Oklahoma City Thunder"
+    },
+    {
+      "full_name": "Darius Bazley",
+      "b_day": "06/12/00",
+      "scenario": "released",
+      "field": "team",
+      "old": "Oklahoma City Thunder",
+      "new": ""
+    },
+    {
+      "full_name": "Wesley Matthews",
+      "b_day": "10/14/86",
+      "scenario": "released",
+      "field": "team",
+      "old": "Milwaukee Bucks",
+      "new": ""
+    },
+    {
+      "full_name": "Gorgui Dieng",
+      "b_day": "01/18/90",
+      "scenario": "released",
+      "field": "team",
+      "old": "Memphis Grizzlies",
+      "new": ""
+    },
+    {
+      "full_name": "Jeremy Lamb",
+      "b_day": "05/30/92",
+      "scenario": "released",
+      "field": "team",
+      "old": "Indiana Pacers",
+      "new": ""
+    },
+    {
+      "full_name": "Kevin Knox",
+      "b_day": "08/11/99",
+      "scenario": "released",
+      "field": "team",
+      "old": "New York Knicks",
+      "new": ""
+    },
+    {
+      "full_name": "Kemba Walker",
+      "b_day": "05/08/90",
+      "scenario": "released",
+      "field": "team",
+      "old": "Boston Celtics",
+      "new": ""
+    },
+    {
+      "full_name": "Jimmy Butler",
+      "b_day": "09/14/89",
+      "scenario": "released",
+      "field": "team",
+      "old": "Miami Heat",
+      "new": ""
+    },
+    {
+      "full_name": "Garrett Temple",
+      "b_day": "05/08/86",
+      "scenario": "released",
+      "field": "team",
+      "old": "Brooklyn Nets",
+      "new": ""
+    },
+    {
+      "full_name": "Lauri Markkanen",
+      "b_day": "05/22/97",
+      "scenario": "released",
+      "field": "team",
+      "old": "Chicago Bulls",
+      "new": ""
+    },
+    {
+      "full_name": "Otto Porter",
+      "b_day": "06/03/93",
+      "scenario": "released",
+      "field": "team",
+      "old": "Chicago Bulls",
+      "new": ""
+    },
+    {
+      "full_name": "Mason Plumlee",
+      "b_day": "03/05/90",
+      "scenario": "released",
+      "field": "team",
+      "old": "Denver Nuggets",
+      "new": ""
+    },
+    {
+      "full_name": "Kyle O'Quinn",
+      "b_day": "03/26/90",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$2174318",
+      "new": "$2825394"
+    },
+    {
+      "full_name": "Patrick Beverley",
+      "b_day": "07/12/88",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$12345680",
+      "new": "$10683154"
+    },
+    {
+      "full_name": "Damyean Dotson",
+      "b_day": "05/06/94",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$1618520",
+      "new": "$2199244"
+    },
+    {
+      "full_name": "Brandon Ingram",
+      "b_day": "09/02/97",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$7265485",
+      "new": "$9080000"
+    },
+    {
+      "full_name": "Keita Bates-Diop",
+      "b_day": "01/23/96",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$1416852",
+      "new": "$2046955"
+    },
+    {
+      "full_name": "Karl-Anthony Towns",
+      "b_day": "11/15/95",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$27285000",
+      "new": "$33715941"
+    },
+    {
+      "full_name": "Danuel House",
+      "b_day": "06/07/93",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$3540000",
+      "new": "$2536635"
+    },
+    {
+      "full_name": "Marvin Williams",
+      "b_day": "06/19/86",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$14654179",
+      "new": "$22884937"
+    },
+    {
+      "full_name": "Wesley Iwundu",
+      "b_day": "12/20/94",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$1618520",
+      "new": "$2267077"
+    },
+    {
+      "full_name": "Tomas Satoransky",
+      "b_day": "10/30/91",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$10000000",
+      "new": "$13365807"
+    },
+    {
+      "full_name": "Theo Pinson",
+      "b_day": "11/05/95",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$1445697",
+      "new": "$1551967"
+    },
+    {
+      "full_name": "Lonzo Ball",
+      "b_day": "10/27/97",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$8719320",
+      "new": "$11862498"
+    },
+    {
+      "full_name": "PJ Tucker",
+      "b_day": "05/05/85",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$8349039",
+      "new": "$9390169"
+    },
+    {
+      "full_name": "Thaddeus Young",
+      "b_day": "06/21/88",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$12900000",
+      "new": "$14038834"
+    },
+    {
+      "full_name": "Glenn Robinson III",
+      "b_day": "01/08/94",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$1882867",
+      "new": "$1777910"
+    },
+    {
+      "full_name": "Dwight Powell",
+      "b_day": "07/20/91",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$10259375",
+      "new": "$15591248"
+    },
+    {
+      "full_name": "Christian Wood",
+      "b_day": "09/27/95",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$1645357",
+      "new": "$2003913"
+    },
+    {
+      "full_name": "Brandon Knight",
+      "b_day": "12/02/91",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$15643750",
+      "new": "$19278427"
+    },
+    {
+      "full_name": "De'Andre Hunter",
+      "b_day": "12/01/97",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$7068360",
+      "new": "$10294737"
+    },
+    {
+      "full_name": "Torrey Craig",
+      "b_day": "12/19/90",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$2000000",
+      "new": "$2563260"
+    },
+    {
+      "full_name": "Derrick Favors",
+      "b_day": "07/15/91",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$17650000",
+      "new": "$11722817"
+    },
+    {
+      "full_name": "Bismack Biyombo",
+      "b_day": "08/28/92",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$17000000",
+      "new": "$21685570"
+    },
+    {
+      "full_name": "Harrison Barnes",
+      "b_day": "05/30/92",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$24147727",
+      "new": "$32022786"
+    },
+    {
+      "full_name": "Jerome Robinson",
+      "b_day": "02/22/97",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$3567720",
+      "new": "$2421633"
+    },
+    {
+      "full_name": "Malcolm Miller",
+      "b_day": "03/06/93",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$1588231",
+      "new": "$1992841"
+    },
+    {
+      "full_name": "Andre Drummond",
+      "b_day": "08/10/93",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$27093018",
+      "new": "$32824840"
+    },
+    {
+      "full_name": "Chris Boucher",
+      "b_day": "01/11/93",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$1588231",
+      "new": "$1952521"
+    },
+    {
+      "full_name": "Khris Middleton",
+      "b_day": "08/12/91",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$30603448",
+      "new": "$40333451"
+    },
+    {
+      "full_name": "Talen Horton-Tucker",
+      "b_day": "11/20/00",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$898310",
+      "new": "$961314"
+    },
+    {
+      "full_name": "Joel Embiid",
+      "b_day": "03/16/94",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$31579390",
+      "new": "$36866155"
+    },
+    {
+      "full_name": "Tim Frazier",
+      "b_day": "11/01/90",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$1620564",
+      "new": "$1797309"
+    },
+    {
+      "full_name": "Ryan Arcidiacono",
+      "b_day": "03/26/94",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$3000000",
+      "new": "$4491717"
+    },
+    {
+      "full_name": "Jordan Clarkson",
+      "b_day": "06/07/92",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$13437500",
+      "new": "$15146038"
+    },
+    {
+      "full_name": "Ishmael Smith",
+      "b_day": "07/05/88",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$6000000",
+      "new": "$6321360"
+    },
+    {
+      "full_name": "Grant Williams",
+      "b_day": "11/30/98",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$2379840",
+      "new": "$3231347"
+    },
+    {
+      "full_name": "Josh Jackson",
+      "b_day": "02/10/97",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$7059480",
+      "new": "$5237533"
+    },
+    {
+      "full_name": "Allen Crabbe",
+      "b_day": "04/09/92",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$17818456",
+      "new": "$24234734"
+    },
+    {
+      "full_name": "Noah Vonleh",
+      "b_day": "08/24/95",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$2000000",
+      "new": "$2828847"
+    },
+    {
+      "full_name": "Louis Williams",
+      "b_day": "10/27/86",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$8000000",
+      "new": "$11071315"
+    },
+    {
+      "full_name": "Monte Morris",
+      "b_day": "06/27/95",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$1588231",
+      "new": "$2217491"
+    },
+    {
+      "full_name": "Delon Wright",
+      "b_day": "04/26/92",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$9473684",
+      "new": "$11002115"
+    },
+    {
+      "full_name": "Tyus Jones",
+      "b_day": "05/10/96",
+      "scenario": "new_contract",
+      "field": "salary",
+      "old": "$10116000",
+      "new": "$11862519"
+    },
+    {
+      "full_name": "Ben McLemore",
+      "b_day": "02/11/93",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "71",
+      "new": "70"
+    },
+    {
+      "full_name": "Nickeil Alexander-Walker",
+      "b_day": "09/02/98",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "72",
+      "new": "73"
+    },
+    {
+      "full_name": "Ryan Broekhoff",
+      "b_day": "08/23/90",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "72",
+      "new": "70"
+    },
+    {
+      "full_name": "Isaiah Thomas",
+      "b_day": "02/07/89",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "76",
+      "new": "72"
+    },
+    {
+      "full_name": "Joe Harris",
+      "b_day": "09/06/91",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "78",
+      "new": "79"
+    },
+    {
+      "full_name": "Edmond Sumner",
+      "b_day": "12/13/95",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "71",
+      "new": "69"
+    },
+    {
+      "full_name": "Dwayne Bacon",
+      "b_day": "08/30/95",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "73",
+      "new": "72"
+    },
+    {
+      "full_name": "Jalen Lecque",
+      "b_day": "06/13/00",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "68",
+      "new": "71"
+    },
+    {
+      "full_name": "Kent Bazemore",
+      "b_day": "07/01/89",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "75",
+      "new": "73"
+    },
+    {
+      "full_name": "Dion Waiters",
+      "b_day": "12/10/91",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "76",
+      "new": "78"
+    },
+    {
+      "full_name": "Michael Frazier",
+      "b_day": "03/08/94",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "68",
+      "new": "67"
+    },
+    {
+      "full_name": "Aaron Gordon",
+      "b_day": "09/16/95",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "81",
+      "new": "79"
+    },
+    {
+      "full_name": "Noah Vonleh",
+      "b_day": "08/24/95",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "75",
+      "new": "76"
+    },
+    {
+      "full_name": "Jahlil Okafor",
+      "b_day": "12/15/95",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "76",
+      "new": "75"
+    },
+    {
+      "full_name": "Dejounte Murray",
+      "b_day": "09/19/96",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "78",
+      "new": "77"
+    },
+    {
+      "full_name": "Al-Farouq Aminu",
+      "b_day": "09/21/90",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "77",
+      "new": "76"
+    },
+    {
+      "full_name": "Larry Nance Jr",
+      "b_day": "01/01/93",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "78",
+      "new": "79"
+    },
+    {
+      "full_name": "Jayson Tatum",
+      "b_day": "03/03/98",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "85",
+      "new": "87"
+    },
+    {
+      "full_name": "Jacob Evans",
+      "b_day": "06/18/97",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "71",
+      "new": "70"
+    },
+    {
+      "full_name": "Jaren Jackson",
+      "b_day": "09/15/99",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "82",
+      "new": "83"
+    },
+    {
+      "full_name": "Karl-Anthony Towns",
+      "b_day": "11/15/95",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "89",
+      "new": "87"
+    },
+    {
+      "full_name": "Chandler Hutchison",
+      "b_day": "04/26/96",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "72",
+      "new": "71"
+    },
+    {
+      "full_name": "D'Angelo Russell",
+      "b_day": "02/23/96",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "87",
+      "new": "88"
+    },
+    {
+      "full_name": "Marco Belinelli",
+      "b_day": "03/25/86",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "75",
+      "new": "71"
+    },
+    {
+      "full_name": "Donte DiVincenzo",
+      "b_day": "01/31/97",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "72",
+      "new": "73"
+    },
+    {
+      "full_name": "Kostas Antetokounmpo",
+      "b_day": "11/20/97",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "68",
+      "new": "69"
+    },
+    {
+      "full_name": "DeMarre Carroll",
+      "b_day": "07/27/86",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "77",
+      "new": "76"
+    },
+    {
+      "full_name": "Wilson Chandler",
+      "b_day": "05/10/87",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "75",
+      "new": "74"
+    },
+    {
+      "full_name": "DJ Wilson",
+      "b_day": "02/19/96",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "72",
+      "new": "74"
+    },
+    {
+      "full_name": "Marc Gasol",
+      "b_day": "01/29/85",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "82",
+      "new": "80"
+    },
+    {
+      "full_name": "Jonathon Simmons",
+      "b_day": "09/14/89",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "73",
+      "new": "72"
+    },
+    {
+      "full_name": "Stanley Johnson",
+      "b_day": "05/29/96",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "73",
+      "new": "74"
+    },
+    {
+      "full_name": "Jonas Valanciunas",
+      "b_day": "05/06/92",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "81",
+      "new": "79"
+    },
+    {
+      "full_name": "Avery Bradley",
+      "b_day": "11/26/90",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "76",
+      "new": "77"
+    },
+    {
+      "full_name": "Robin Lopez",
+      "b_day": "04/01/88",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "75",
+      "new": "73"
+    },
+    {
+      "full_name": "Daniel Gafford",
+      "b_day": "10/01/98",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "71",
+      "new": "72"
+    },
+    {
+      "full_name": "Admiral Schofield",
+      "b_day": "03/30/97",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "71",
+      "new": "70"
+    },
+    {
+      "full_name": "Domantas Sabonis",
+      "b_day": "05/03/96",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "81",
+      "new": "80"
+    },
+    {
+      "full_name": "Tim Hardaway Jr",
+      "b_day": "03/16/92",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "77",
+      "new": "78"
+    },
+    {
+      "full_name": "Eric Gordon",
+      "b_day": "12/25/88",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "78",
+      "new": "74"
+    },
+    {
+      "full_name": "Jordan Bell",
+      "b_day": "01/07/95",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "74",
+      "new": "73"
+    },
+    {
+      "full_name": "Chandler Parsons",
+      "b_day": "10/25/88",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "74",
+      "new": "70"
+    },
+    {
+      "full_name": "DJ Augustin",
+      "b_day": "11/10/87",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "76",
+      "new": "74"
+    },
+    {
+      "full_name": "Damian Lillard",
+      "b_day": "07/15/90",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "94",
+      "new": "96"
+    },
+    {
+      "full_name": "Bojan Bogdanovic",
+      "b_day": "04/18/89",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "83",
+      "new": "84"
+    },
+    {
+      "full_name": "Rondae Hollis-Jefferson",
+      "b_day": "01/03/95",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "75",
+      "new": "76"
+    },
+    {
+      "full_name": "Jevon Carter",
+      "b_day": "09/14/95",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "71",
+      "new": "69"
+    },
+    {
+      "full_name": "Wesley Matthews",
+      "b_day": "10/14/86",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "76",
+      "new": "73"
+    },
+    {
+      "full_name": "Cory Joseph",
+      "b_day": "08/20/91",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "74",
+      "new": "75"
+    },
+    {
+      "full_name": "Jalen Brunson",
+      "b_day": "08/31/96",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "76",
+      "new": "75"
+    },
+    {
+      "full_name": "Miles Bridges",
+      "b_day": "03/21/98",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "76",
+      "new": "78"
+    },
+    {
+      "full_name": "Zhaire Smith",
+      "b_day": "06/04/99",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "72",
+      "new": "74"
+    },
+    {
+      "full_name": "Jordan Poole",
+      "b_day": "06/19/99",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "70",
+      "new": "71"
+    },
+    {
+      "full_name": "Danilo Gallinari",
+      "b_day": "08/08/88",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "83",
+      "new": "81"
+    },
+    {
+      "full_name": "Elfrid Payton",
+      "b_day": "02/22/94",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "76",
+      "new": "77"
+    },
+    {
+      "full_name": "Taj Gibson",
+      "b_day": "06/24/85",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "77",
+      "new": "76"
+    },
+    {
+      "full_name": "Moritz Wagner",
+      "b_day": "04/26/97",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "71",
+      "new": "72"
+    },
+    {
+      "full_name": "Chris Boucher",
+      "b_day": "01/11/93",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "71",
+      "new": "70"
+    },
+    {
+      "full_name": "Mario Hezonja",
+      "b_day": "02/25/95",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "75",
+      "new": "73"
+    },
+    {
+      "full_name": "Yante Maten",
+      "b_day": "08/14/96",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "70",
+      "new": "69"
+    },
+    {
+      "full_name": "Ivan Rabb",
+      "b_day": "02/04/97",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "74",
+      "new": "72"
+    },
+    {
+      "full_name": "Justise Winslow",
+      "b_day": "03/26/96",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "78",
+      "new": "77"
+    },
+    {
+      "full_name": "Langston Galloway",
+      "b_day": "12/09/91",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "72",
+      "new": "70"
+    },
+    {
+      "full_name": "Robert Williams",
+      "b_day": "10/17/97",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "74",
+      "new": "76"
+    },
+    {
+      "full_name": "Wendell Carter",
+      "b_day": "04/16/99",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "78",
+      "new": "79"
+    },
+    {
+      "full_name": "Thaddeus Young",
+      "b_day": "06/21/88",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "79",
+      "new": "76"
+    },
+    {
+      "full_name": "Terry Rozier",
+      "b_day": "03/17/94",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "78",
+      "new": "80"
+    },
+    {
+      "full_name": "Mike Scott",
+      "b_day": "07/16/88",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "75",
+      "new": "74"
+    },
+    {
+      "full_name": "Jarred Vanderbilt",
+      "b_day": "04/03/99",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "70",
+      "new": "74"
+    },
+    {
+      "full_name": "Danny Green",
+      "b_day": "06/22/87",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "77",
+      "new": "75"
+    },
+    {
+      "full_name": "Mason Plumlee",
+      "b_day": "03/05/90",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "77",
+      "new": "78"
+    },
+    {
+      "full_name": "Paul George",
+      "b_day": "05/02/90",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "93",
+      "new": "92"
+    },
+    {
+      "full_name": "Jake Layman",
+      "b_day": "03/07/94",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "75",
+      "new": "76"
+    },
+    {
+      "full_name": "Kevin Love",
+      "b_day": "09/07/88",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "83",
+      "new": "81"
+    },
+    {
+      "full_name": "Brad Wanamaker",
+      "b_day": "07/25/89",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "73",
+      "new": "71"
+    },
+    {
+      "full_name": "James Ennis",
+      "b_day": "07/01/90",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "73",
+      "new": "72"
+    },
+    {
+      "full_name": "Melvin Frazier",
+      "b_day": "08/30/96",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "70",
+      "new": "69"
+    },
+    {
+      "full_name": "Kenrich Williams",
+      "b_day": "12/02/94",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "72",
+      "new": "73"
+    },
+    {
+      "full_name": "Royce O'Neale",
+      "b_day": "06/05/93",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "73",
+      "new": "74"
+    },
+    {
+      "full_name": "De'Aaron Fox",
+      "b_day": "12/20/97",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "86",
+      "new": "85"
+    },
+    {
+      "full_name": "Kris Dunn",
+      "b_day": "03/18/94",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "75",
+      "new": "77"
+    },
+    {
+      "full_name": "Dillon Brooks",
+      "b_day": "01/22/96",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "74",
+      "new": "76"
+    },
+    {
+      "full_name": "Louis Williams",
+      "b_day": "10/27/86",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "84",
+      "new": "81"
+    },
+    {
+      "full_name": "Terrance Ferguson",
+      "b_day": "05/17/98",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "71",
+      "new": "72"
+    },
+    {
+      "full_name": "Eric Bledsoe",
+      "b_day": "12/09/89",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "85",
+      "new": "84"
+    },
+    {
+      "full_name": "Alfonzo McKinnie",
+      "b_day": "09/17/92",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "72",
+      "new": "74"
+    },
+    {
+      "full_name": "Andre Drummond",
+      "b_day": "08/10/93",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "86",
+      "new": "88"
+    },
+    {
+      "full_name": "Norman Powell",
+      "b_day": "05/25/93",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "74",
+      "new": "75"
+    },
+    {
+      "full_name": "Bryn Forbes",
+      "b_day": "07/23/93",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "75",
+      "new": "74"
+    },
+    {
+      "full_name": "Malik Beasley",
+      "b_day": "11/26/96",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "77",
+      "new": "79"
+    },
+    {
+      "full_name": "Jamal Murray",
+      "b_day": "02/23/97",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "84",
+      "new": "85"
+    },
+    {
+      "full_name": "Michael Beasley",
+      "b_day": "01/09/89",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "76",
+      "new": "77"
+    },
+    {
+      "full_name": "Derrick Rose",
+      "b_day": "10/04/88",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "80",
+      "new": "76"
+    },
+    {
+      "full_name": "Serge Ibaka",
+      "b_day": "09/18/89",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "81",
+      "new": "82"
+    },
+    {
+      "full_name": "Blake Griffin",
+      "b_day": "03/16/89",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "88",
+      "new": "84"
+    },
+    {
+      "full_name": "Nassir Little",
+      "b_day": "02/11/00",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "73",
+      "new": "74"
+    },
+    {
+      "full_name": "Clint Capela",
+      "b_day": "05/18/94",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "85",
+      "new": "84"
+    },
+    {
+      "full_name": "Shake Milton",
+      "b_day": "09/26/96",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "71",
+      "new": "72"
+    },
+    {
+      "full_name": "Kevin Durant",
+      "b_day": "09/29/88",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "96",
+      "new": "94"
+    },
+    {
+      "full_name": "Nicolo Melli",
+      "b_day": "01/26/91",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "73",
+      "new": "72"
+    },
+    {
+      "full_name": "Jerami Grant",
+      "b_day": "03/12/94",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "77",
+      "new": "75"
+    },
+    {
+      "full_name": "Enes Kanter",
+      "b_day": "05/20/92",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "80",
+      "new": "78"
+    },
+    {
+      "full_name": "Otto Porter",
+      "b_day": "06/03/93",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "80",
+      "new": "81"
+    },
+    {
+      "full_name": "Markelle Fultz",
+      "b_day": "05/29/98",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "74",
+      "new": "76"
+    },
+    {
+      "full_name": "Buddy Hield",
+      "b_day": "12/17/93",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "84",
+      "new": "85"
+    },
+    {
+      "full_name": "TJ McConnell",
+      "b_day": "03/25/92",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "75",
+      "new": "76"
+    },
+    {
+      "full_name": "Allonzo Trier",
+      "b_day": "01/17/96",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "75",
+      "new": "77"
+    },
+    {
+      "full_name": "Ben Simmons",
+      "b_day": "07/20/96",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "87",
+      "new": "86"
+    },
+    {
+      "full_name": "Stephen Curry",
+      "b_day": "03/14/88",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "96",
+      "new": "94"
+    },
+    {
+      "full_name": "Jrue Holiday",
+      "b_day": "06/12/90",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "86",
+      "new": "85"
+    },
+    {
+      "full_name": "Isaiah Hartenstein",
+      "b_day": "05/05/98",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "68",
+      "new": "71"
+    },
+    {
+      "full_name": "Frank Ntilikina",
+      "b_day": "07/28/98",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "73",
+      "new": "76"
+    },
+    {
+      "full_name": "Ricky Rubio",
+      "b_day": "10/21/90",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "78",
+      "new": "79"
+    },
+    {
+      "full_name": "Grayson Allen",
+      "b_day": "10/08/95",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "72",
+      "new": "71"
+    },
+    {
+      "full_name": "Richaun Holmes",
+      "b_day": "10/15/93",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "75",
+      "new": "74"
+    },
+    {
+      "full_name": "Gary Clark",
+      "b_day": "11/16/94",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "69",
+      "new": "67"
+    },
+    {
+      "full_name": "Cheick Diallo",
+      "b_day": "09/13/96",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "74",
+      "new": "73"
+    },
+    {
+      "full_name": "Ishmael Smith",
+      "b_day": "07/05/88",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "73",
+      "new": "71"
+    },
+    {
+      "full_name": "Willie Cauley-Stein",
+      "b_day": "08/18/93",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "79",
+      "new": "80"
+    },
+    {
+      "full_name": "Trey Lyles",
+      "b_day": "11/05/95",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "75",
+      "new": "74"
+    },
+    {
+      "full_name": "Ja Morant",
+      "b_day": "08/10/99",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "79",
+      "new": "83"
+    },
+    {
+      "full_name": "PJ Washington",
+      "b_day": "08/23/98",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "72",
+      "new": "76"
+    },
+    {
+      "full_name": "Anthony Davis",
+      "b_day": "03/11/93",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "95",
+      "new": "96"
+    },
+    {
+      "full_name": "Damyean Dotson",
+      "b_day": "05/06/94",
+      "scenario": "rating_change",
+      "field": "rating",
+      "old": "75",
+      "new": "74"
+    },
+    {
+      "full_name": "Isaac Bonga",
+      "b_day": "11/08/99",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "200 lbs. / 90.7 kg.",
+      "new": "204 lbs. / 92.7 kg."
+    },
+    {
+      "full_name": "Coby White",
+      "b_day": "02/16/00",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "185 lbs. / 83.9 kg.",
+      "new": "187 lbs. / 84.9 kg."
+    },
+    {
+      "full_name": "Anthony Davis",
+      "b_day": "03/11/93",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "222 lbs. / 100.7 kg.",
+      "new": "224 lbs. / 101.7 kg."
+    },
+    {
+      "full_name": "Jevon Carter",
+      "b_day": "09/14/95",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "200 lbs. / 90.7 kg.",
+      "new": "204 lbs. / 92.7 kg."
+    },
+    {
+      "full_name": "Monte Morris",
+      "b_day": "06/27/95",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "175 lbs. / 79.4 kg.",
+      "new": "171 lbs. / 77.4 kg."
+    },
+    {
+      "full_name": "Nicolas Batum",
+      "b_day": "12/14/88",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "210 lbs. / 95.3 kg.",
+      "new": "206 lbs. / 93.3 kg."
+    },
+    {
+      "full_name": "Troy Daniels",
+      "b_day": "07/15/91",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "200 lbs. / 90.7 kg.",
+      "new": "198 lbs. / 89.7 kg."
+    },
+    {
+      "full_name": "Emmanuel Mudiay",
+      "b_day": "03/05/96",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "190 lbs. / 86.2 kg.",
+      "new": "197 lbs. / 89.2 kg."
+    },
+    {
+      "full_name": "James Harden",
+      "b_day": "08/26/89",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "220 lbs. / 99.8 kg.",
+      "new": "222 lbs. / 100.8 kg."
+    },
+    {
+      "full_name": "Spencer Dinwiddie",
+      "b_day": "04/06/93",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "205 lbs. / 93 kg.",
+      "new": "212 lbs. / 96.0 kg."
+    },
+    {
+      "full_name": "Cory Joseph",
+      "b_day": "08/20/91",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "185 lbs. / 83.9 kg.",
+      "new": "178 lbs. / 80.9 kg."
+    },
+    {
+      "full_name": "Jordan Clarkson",
+      "b_day": "06/07/92",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "186 lbs. / 84.4 kg.",
+      "new": "190 lbs. / 86.4 kg."
+    },
+    {
+      "full_name": "De'Andre Hunter",
+      "b_day": "12/01/97",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "225 lbs. / 102.1 kg.",
+      "new": "234 lbs. / 106.1 kg."
+    },
+    {
+      "full_name": "Malcolm Miller",
+      "b_day": "03/06/93",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "205 lbs. / 93 kg.",
+      "new": "203 lbs. / 92.0 kg."
+    },
+    {
+      "full_name": "Norman Powell",
+      "b_day": "05/25/93",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "215 lbs. / 97.5 kg.",
+      "new": "213 lbs. / 96.5 kg."
+    },
+    {
+      "full_name": "Zhaire Smith",
+      "b_day": "06/04/99",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "205 lbs. / 93 kg.",
+      "new": "201 lbs. / 91.0 kg."
+    },
+    {
+      "full_name": "Naz Reid",
+      "b_day": "08/26/99",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "249 lbs. / 112.9 kg.",
+      "new": "247 lbs. / 111.9 kg."
+    },
+    {
+      "full_name": "Bradley Beal",
+      "b_day": "06/28/93",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "207 lbs. / 93.9 kg.",
+      "new": "214 lbs. / 96.9 kg."
+    },
+    {
+      "full_name": "Allen Crabbe",
+      "b_day": "04/09/92",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "197 lbs. / 89.4 kg.",
+      "new": "204 lbs. / 92.4 kg."
+    },
+    {
+      "full_name": "Jrue Holiday",
+      "b_day": "06/12/90",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "180 lbs. / 81.6 kg.",
+      "new": "171 lbs. / 77.6 kg."
+    },
+    {
+      "full_name": "Zion Williamson",
+      "b_day": "07/06/00",
+      "scenario": "weight_change",
+      "field": "weight",
+      "old": "284 lbs. / 128.8 kg.",
+      "new": "291 lbs. / 131.8 kg."
+    },
+    {
+      "full_name": "Carsen Edwards",
+      "b_day": "03/12/98",
+      "scenario": "position_change",
+      "field": "position",
+      "old": "G",
+      "new": "G-F"
+    },
+    {
+      "full_name": "Thomas Bryant",
+      "b_day": "07/31/97",
+      "scenario": "position_change",
+      "field": "position",
+      "old": "F-C",
+      "new": "C"
+    },
+    {
+      "full_name": "Nikola Jokic",
+      "b_day": "02/19/95",
+      "scenario": "name_respelled",
+      "field": "full_name",
+      "old": "Nikola Jokic",
+      "new": "Nikola Jokić"
+    },
+    {
+      "full_name": "Luka Doncic",
+      "b_day": "02/28/99",
+      "scenario": "name_respelled",
+      "field": "full_name",
+      "old": "Luka Doncic",
+      "new": "Luka Dončić"
+    },
+    {
+      "full_name": "Nikola Vucevic",
+      "b_day": "10/24/90",
+      "scenario": "name_respelled",
+      "field": "full_name",
+      "old": "Nikola Vucevic",
+      "new": "Nikola Vučević"
+    },
+    {
+      "full_name": "Dario Saric",
+      "b_day": "04/08/94",
+      "scenario": "whitespace_noise",
+      "field": "full_name",
+      "old": "Dario Saric",
+      "new": "Dario  Saric "
+    },
+    {
+      "full_name": "Dario  Saric ",
+      "b_day": "04/08/94",
+      "scenario": "whitespace_noise",
+      "field": "salary",
+      "old": "$3481985",
+      "new": "$3481985 "
+    },
+    {
+      "full_name": "Omari Spellman",
+      "b_day": "07/21/97",
+      "scenario": "whitespace_noise",
+      "field": "full_name",
+      "old": "Omari Spellman",
+      "new": "Omari  Spellman "
+    },
+    {
+      "full_name": "Omari  Spellman ",
+      "b_day": "07/21/97",
+      "scenario": "whitespace_noise",
+      "field": "salary",
+      "old": "$1897800",
+      "new": "$1897800 "
+    }
+  ],
+  "quality_issues": [
+    {
+      "full_name": "Fred VanVleet",
+      "b_day": "02/25/94",
+      "scenario": "inherited_from_source",
+      "field": "draft_inconsistent",
+      "old": "draft_year=2006 round=Undrafted pick=Undrafted",
+      "new": "kept as-is"
+    },
+    {
+      "full_name": "Rodney Hood",
+      "b_day": "10/20/92",
+      "scenario": "duplicate_row",
+      "field": "",
+      "old": "",
+      "new": "exact copy of the line"
+    },
+    {
+      "full_name": "Derrick Jones",
+      "b_day": "02/15/97",
+      "scenario": "conflicting_duplicate",
+      "field": "rating",
+      "old": "74",
+      "new": "69"
+    },
+    {
+      "full_name": "Shaquille Harrison",
+      "b_day": "10/06/93",
+      "scenario": "salary_invalid",
+      "field": "salary",
+      "old": "$1620564",
+      "new": "N/A"
+    },
+    {
+      "full_name": "Jonah Bolden",
+      "b_day": "01/02/96",
+      "scenario": "jersey_out_of_range",
+      "field": "jersey",
+      "old": "#0",
+      "new": "#100"
+    },
+    {
+      "full_name": "Keon Sandoval",
+      "b_day": "02/30/01",
+      "scenario": "missing_identity",
+      "field": "b_day",
+      "old": "",
+      "new": "02/30/01 does not exist"
+    },
+    {
+      "full_name": "Deni Lindqvist",
+      "b_day": "03/03/96",
+      "scenario": "draft_inconsistent",
+      "field": "draft_peak",
+      "old": "",
+      "new": "Undrafted round with pick 45"
+    }
+  ]
+}

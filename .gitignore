@@ -6,7 +6,6 @@ __pycache__/
 
 # Local secrets and data
 .env
-data/
 
 # Databricks bundle cache
 .databricks/
