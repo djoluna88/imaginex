@@ -10,15 +10,8 @@ The only two things we protect against here:
 from pyspark.sql import DataFrame, SparkSession, functions as F
 from pyspark.sql.types import StringType, StructField, StructType
 
+from nba_pipeline.config import RAW_COLUMNS   # re-exported: transform.py and load.py import it from here
 from nba_pipeline.exceptions import SchemaDriftError
-
-# The 15 CSV columns, in the exact order they arrive.
-# Confirmed by profiling the file. If the source changes, this is the place to update.
-RAW_COLUMNS = [
-    "full_name", "rating", "jersey", "team", "position", "b_day",
-    "height", "weight", "salary", "country", "draft_year",
-    "draft_round", "draft_peak", "college", "version",
-]
 
 CORRUPT_COL = "_corrupt_record"
 

@@ -16,15 +16,21 @@ Why this shape: a rule is one line to read, one line to test, one line in the RE
 Nothing here drops or fixes data. transform.py parses, quality.py judges, gold consumes.
 """
 from dataclasses import dataclass
+from typing import Callable
 
 from pyspark.sql import Column, DataFrame, Window, functions as F
 
 
 @dataclass(frozen=True)
 class Rule:
-    name      : str    # short snake_case id, ends up in the failed_rules array
-    why       : str    # one sentence, shown in describe_rules() and copied into the README
-    fails_when: Column # TRUE means the row does not pass
+    name      : str                    # short snake_case id, ends up in the failed_rules array
+    why       : str                    # one sentence, shown in describe_rules() and copied into the README
+    fails_when: Callable[[], Column]   # builds the condition; TRUE means the row does not pass
+
+    # Why a callable and not a Column: classic PySpark needs a live SparkSession to build
+    # Window and Column objects. Building them at import time worked on serverless (Spark
+    # Connect is lazy) but made the module impossible to import in tests or for the README.
+    # Now the condition is built inside apply_rules, where a session always exists.
 
 
 # --------------------------------------------------------------------------- #
@@ -38,9 +44,25 @@ def _null_or_outside(col: str, low, high) -> Column:
     return c.isNull() | (c < low) | (c > high)
 
 
-# The natural key of a silver row. Two rows with the same pair describe the same player
-# at the same point in time, which should never happen inside one snapshot.
-_SAME_PLAYER_SAME_SNAPSHOT = Window.partitionBy("player_bk", "snapshot_date")
+def _same_player_same_snapshot() -> Window:
+    """The natural key of a silver row. Two rows with the same pair describe the same player
+    at the same point in time, which should never happen inside one snapshot."""
+    return Window.partitionBy("player_bk", "snapshot_date")
+
+
+def _draft_inconsistent() -> Column:
+    return (
+        # undrafted but carries draft numbers
+        (F.col("is_undrafted") & (F.col("draft_round").isNotNull() | F.col("draft_pick").isNotNull()))
+        # drafted but numbers missing or impossible
+        | (~F.col("is_undrafted") & (
+            _null_or_outside("draft_round", 1, 2) | _null_or_outside("draft_pick", 1, 60)
+        ))
+        # draft year does not fit the player's life
+        | F.col("draft_year").isNull()
+        | (F.col("draft_year") < F.year("birth_date") + 17)
+        | (F.col("draft_year") > F.year("snapshot_date"))
+    )
 
 
 # --------------------------------------------------------------------------- #
@@ -55,7 +77,7 @@ RULES: list[Rule] = [
         name="missing_identity",
         why="A row needs a name and a parseable birth date to build the player key. "
             "Without them it cannot be matched across snapshots.",
-        fails_when=F.col("full_name").isNull() | F.col("birth_date").isNull(),
+        fails_when=lambda: F.col("full_name").isNull() | F.col("birth_date").isNull(),
     ),
 
     Rule(
@@ -63,14 +85,14 @@ RULES: list[Rule] = [
         why="The same player appears more than once in the same snapshot with identical "
             "attributes. Almost always a duplicated line in the source file. Only the copies "
             "are flagged; the first occurrence passes.",
-        fails_when=F.row_number().over(_SAME_PLAYER_SAME_SNAPSHOT.orderBy("attr_hash")) > 1,
+        fails_when=lambda: F.row_number().over(_same_player_same_snapshot().orderBy("attr_hash")) > 1,
     ),
 
     Rule(
         name="conflicting_duplicate",
         why="The same player appears more than once in the same snapshot with DIFFERENT "
             "attributes. We cannot tell which version is right, so all of them are held back.",
-        fails_when=F.size(F.collect_set("attr_hash").over(_SAME_PLAYER_SAME_SNAPSHOT)) > 1,
+        fails_when=lambda: F.size(F.collect_set("attr_hash").over(_same_player_same_snapshot())) > 1,
     ),
 
     # --- Plausibility: values a real NBA player can have -------------------------------
@@ -79,39 +101,39 @@ RULES: list[Rule] = [
         name="age_out_of_range",
         why="Age at snapshot must be between 18 and 45. Catches a wrong century pivot on the "
             "two-digit birth year (a 1984 baby read as 2084 gives a negative age).",
-        fails_when=_null_or_outside("age_at_snapshot", 18, 45),
+        fails_when=lambda: _null_or_outside("age_at_snapshot", 18, 45),
     ),
 
     Rule(
         name="rating_out_of_range",
         why="NBA 2K ratings are on a 40 to 99 scale. Anything else is a parsing or source error.",
-        fails_when=_null_or_outside("rating", 40, 99),
+        fails_when=lambda: _null_or_outside("rating", 40, 99),
     ),
 
     Rule(
         name="salary_invalid",
         why="Salary must be a positive amount under 60 million USD. Catches an unparsed "
             "dollar string (NULL) and impossible values like 0 or a missing digit.",
-        fails_when=_null_or_outside("salary_usd", 1, 60_000_000),
+        fails_when=lambda: _null_or_outside("salary_usd", 1, 60_000_000),
     ),
 
     Rule(
         name="height_out_of_range",
         why="Height between 160 and 240 cm. Catches swapped units (feet read as meters) "
             "and unparsed strings.",
-        fails_when=_null_or_outside("height_cm", 160, 240),
+        fails_when=lambda: _null_or_outside("height_cm", 160, 240),
     ),
 
     Rule(
         name="weight_out_of_range",
         why="Weight between 60 and 160 kg. Same reasoning as height.",
-        fails_when=_null_or_outside("weight_kg", 60, 160),
+        fails_when=lambda: _null_or_outside("weight_kg", 60, 160),
     ),
 
     Rule(
         name="jersey_out_of_range",
         why="Jersey numbers go from 0 to 99. NULL means the '#' prefix did not parse.",
-        fails_when=_null_or_outside("jersey_number", 0, 99),
+        fails_when=lambda: _null_or_outside("jersey_number", 0, 99),
     ),
 
     # --- Consistency: fields that must agree with each other ---------------------------
@@ -120,18 +142,7 @@ RULES: list[Rule] = [
         name="draft_inconsistent",
         why="An undrafted player has no round or pick; a drafted one has round 1-2 and pick 1-60. "
             "Draft year must be after the player turned 17 and not after the snapshot.",
-        fails_when=(
-            # undrafted but carries draft numbers
-            (F.col("is_undrafted") & (F.col("draft_round").isNotNull() | F.col("draft_pick").isNotNull()))
-            # drafted but numbers missing or impossible
-            | (~F.col("is_undrafted") & (
-                _null_or_outside("draft_round", 1, 2) | _null_or_outside("draft_pick", 1, 60)
-            ))
-            # draft year does not fit the player's life
-            | F.col("draft_year").isNull()
-            | (F.col("draft_year") < F.year("birth_date") + 17)
-            | (F.col("draft_year") > F.year("snapshot_date"))
-        ),
+        fails_when=_draft_inconsistent,
     ),
 ]
 
@@ -147,7 +158,7 @@ def apply_rules(typed: DataFrame, rules: list[Rule] = RULES) -> DataFrame:
     All rules are evaluated for every row, not just the first failure. Seeing that a row
     failed three rules at once is more useful than fixing them one at a time.
     """
-    flags = [F.when(rule.fails_when, F.lit(rule.name)) for rule in rules]
+    flags = [F.when(rule.fails_when(), F.lit(rule.name)) for rule in rules]
     return typed.withColumn("failed_rules", F.array_compact(F.array(*flags)))
 
 

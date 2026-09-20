@@ -180,7 +180,9 @@ def build_player_bk(name_col: Column, birth_col: Column) -> Column:
     players who share a name. Why normalized: "Luka Dončić" and "luka doncic" must match.
     16 hex chars is plenty for a few hundred players and keeps joins readable.
     """
-    normalized_name = F.lower(_strip_accents(name_col))
+    # lower() first: the translate table only lists lowercase letters, so "Šarić" must become
+    # "šarić" before the accents are stripped. The other order left "Š" untouched.
+    normalized_name = _strip_accents(F.lower(name_col))
     return F.substring(F.sha2(F.concat_ws("|", normalized_name, birth_col.cast("string")), 256), 1, 16)
 
 
