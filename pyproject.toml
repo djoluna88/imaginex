@@ -1,0 +1,35 @@
+[project]
+name = "nba-pipeline"
+version = "0.1.0"
+description = "Bronze / silver / gold pipeline over the NBA 2K player dataset, deployed as a Databricks Asset Bundle."
+requires-python = ">=3.10"
+# No runtime dependencies: the job runs on Databricks serverless, where pyspark is provided,
+# and the snapshot simulator uses only the standard library. Everything else is dev tooling.
+dependencies = []
+
+[project.scripts]
+# Generate a later snapshot of the players file locally. Needs nothing beyond the standard library.
+nba-simulate = "nba_pipeline.simulate:main"
+
+[project.optional-dependencies]
+# Tests run on a local Spark. 3.5 is the Spark version behind serverless environment "2",
+# so what passes here behaves the same on the job. Needs a Java 17+ runtime (see Dockerfile).
+dev = [
+    "pytest>=8",
+    "pyspark>=3.5,<4",
+]
+# Only to run the transformations from your machine against a workspace (e.g. the profiling notebook).
+# Mutually exclusive with `dev`: databricks-connect replaces pyspark with a remote-only build,
+# so install it in a separate virtualenv if you need it.
+local = [
+    "databricks-connect",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+addopts = "-ra"
+filterwarnings = ["ignore::DeprecationWarning"]
