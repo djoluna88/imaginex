@@ -1,0 +1,10 @@
+services:
+  pipeline:
+    build: .
+    env_file: .env                 # DATABRICKS_HOST and DATABRICKS_TOKEN of the reviewer's workspace
+    environment:
+      PYTHON: python               # tell the Makefile to use the image's Python, not a mounted .venv
+    volumes:
+      - .:/app                     # your repo, live: make simulate writes into data/, deploy reads it
+      - /app/.venv                 # hide a macOS .venv from the Linux container; its binaries would not run
+    working_dir: /app

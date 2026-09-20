@@ -1,0 +1,18 @@
+# Everything runs inside a Linux container, so files it reads must keep LF line endings even
+# when the repo is cloned on Windows with core.autocrlf=true. CRLF in the Makefile gives
+# "missing separator", CRLF in .env leaves a hidden \r at the end of the token.
+* text=auto
+Makefile        text eol=lf
+*.py            text eol=lf
+*.yml           text eol=lf
+*.yaml          text eol=lf
+*.toml          text eol=lf
+*.md            text eol=lf
+*.sh            text eol=lf
+.env.example    text eol=lf
+.gitattributes  text eol=lf
+.gitignore      text eol=lf
+Dockerfile      text eol=lf
+*.csv           text eol=lf
+*.json          text eol=lf
+*.ipynb         text eol=lf
