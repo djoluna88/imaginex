@@ -7,10 +7,11 @@ and, for each snapshot, touches only what that snapshot affects:
 
   gold_fact_player_snapshot   append-only, one partition per snapshot_date. Reprocessing a
                               snapshot replaces its own partition and nothing else.
-  gold_player_current         one row per player with the latest known state. Kept with a
-                              MERGE keyed by player_bk. This is what the current-state view
-                              and the JSON read, so nobody scans the fact for "latest".
-  gold_dim_player             MERGE: insert new players, refresh static attributes, extend last_seen.
+  gold_dim_player             MERGE keyed by player_bk: insert new players, refresh static
+                              attributes, extend last_seen, and overwrite the current_* columns
+                              (type 1) when the snapshot is the newest seen. The current-state
+                              view and the JSON read these columns, so nobody scans the fact
+                              for "latest".
   gold_dim_team               MERGE: insert team names not seen before.
   gold_dim_snapshot           MERGE: upsert the row for this snapshot.
 
@@ -25,9 +26,9 @@ from datetime import date
 from pyspark.sql import DataFrame, SparkSession, Window, functions as F
 
 from nba_pipeline.config import GoldConfig
-from nba_pipeline.load import (
-    GoldStats, SnapshotStats, export_current_state_json, merge_dim_player, merge_dim_team,
-    merge_player_current, read_silver_snapshot, upsert_dim_snapshot, write_fact_partition,
+from nba_pipeline.load import(
+    GoldStats, SnapshotStats, ensure_gold_tables, export_current_state_json, merge_dim_player,
+    merge_dim_team, read_silver_snapshot, upsert_dim_snapshot, write_fact_partition,
 )
 
 log = logging.getLogger(__name__)
@@ -49,50 +50,52 @@ def run_gold(spark: SparkSession, cfg: GoldConfig) -> GoldStats:
     )
     log.info("gold start | source_file=%s | snapshots=%s | load_id=%s", cfg.source_file, snapshots, cfg.load_id)
 
+    ensure_gold_tables(spark, cfg)
+
     results = [apply_snapshot(spark, cfg, s) for s in snapshots]
 
-    json_path = export_current_state_json(spark, cfg.fq("gold_v_player_current"), cfg.output_dir)
+    json_path = export_current_state_json(spark, cfg.fq(cfg.current_view), cfg.output_dir)
     log.info("gold done | %d snapshots | json=%s | %.1fs", len(results), json_path, time.perf_counter() - t0)
     return GoldStats(cfg.load_id, results, json_path)
 
 
 def apply_snapshot(spark: SparkSession, cfg: GoldConfig, snapshot: date) -> SnapshotStats:
-    """Everything gold does for one snapshot. Five writes, each scoped to this snapshot."""
-    incoming = read_silver_snapshot(spark, cfg, snapshot).cache()
+    """Everything gold does for one snapshot. Each write is scoped to this snapshot."""
+    incoming = read_silver_snapshot(spark, cfg, snapshot)
     is_full = incoming.select("is_full_snapshot").first()["is_full_snapshot"]
 
     latest_known = _latest_processed(spark, cfg)
     if latest_known and snapshot < latest_known:
-        # Allowed, but the later snapshots' change_type will not be recomputed. Documented limitation.
         log.warning("snapshot %s is older than the latest processed (%s); later change_type values may be stale",
                     snapshot, latest_known)
 
-    # 1. Dimensions first, so the fact can look up team_key.
-    merge_dim_player(spark, cfg, incoming)
+    # 1. Dimensions that the fact needs for lookups.
     merge_dim_team(spark, cfg, incoming.select(F.col("team").alias("team_name")).filter("team_name IS NOT NULL").distinct())
     upsert_dim_snapshot(spark, cfg, incoming.groupBy("snapshot_date", "game_version", "is_full_snapshot")
                                              .agg(F.count("*").alias("players_in_file")))
 
-    # 2. Classify against the previous row of each incoming player. Bounded read of the fact.
-    fact_rows = build_fact_rows(spark, cfg, incoming, snapshot)
-    fact_rows.cache()
+    # 2. Classify and write this snapshot's partition of the fact.
+    #    Serverless has no cache(): writing to Delta and reading back is how we avoid recomputing.
+    write_fact_partition(spark, cfg, build_fact_rows(spark, cfg, incoming, snapshot), snapshot)
+    fact_rows = spark.table(cfg.fq(cfg.fact_table)).filter(F.col("snapshot_date") == F.lit(snapshot))
 
-    # 3. Replace only this snapshot's partition in the fact.
-    write_fact_partition(spark, cfg, fact_rows, snapshot)
-
-    # 4. Refresh the current-state table for the players in this snapshot.
-    merge_player_current(spark, cfg, fact_rows, snapshot)
+    # 3. Player dimension, including the current_* columns. Reads the incoming snapshot.
+    merge_dim_player(spark, cfg, incoming)
 
     counts = {r["change_type"]: r["n"] for r in fact_rows.groupBy("change_type").agg(F.count("*").alias("n")).collect()}
     stats = SnapshotStats(snapshot, is_full, cfg.load_id, incoming.count(), counts)
     log.info("snapshot %s | full=%s | %s", snapshot, is_full, counts)
-
-    incoming.unpersist()
-    fact_rows.unpersist()
     return stats
 
 
 def build_fact_rows(spark: SparkSession, cfg: GoldConfig, incoming: DataFrame, snapshot: date) -> DataFrame:
+    """Read the two tables classify_changes needs and delegate. Kept thin so the logic is testable."""
+    fact = spark.table(cfg.fq(cfg.fact_table))
+    dim_team = spark.table(cfg.fq(cfg.dim_team))
+    return classify_changes(incoming, fact, dim_team, snapshot, cfg.load_id)
+
+
+def classify_changes(incoming: DataFrame, fact: DataFrame, dim_team: DataFrame, snapshot: date, load_id: str) -> DataFrame:
     """
     Fact rows for one snapshot with change_type filled in.
 
@@ -101,10 +104,10 @@ def build_fact_rows(spark: SparkSession, cfg: GoldConfig, incoming: DataFrame, s
       - the semi-join on player_bk keeps only the players we care about
       - liquid clustering on (player_bk, snapshot_date) lets Delta skip most files
     Excluding this snapshot's own date is what makes a rerun idempotent.
-    """
-    fact = spark.table(cfg.fq("gold_fact_player_snapshot"))
-    dim_team = spark.table(cfg.fq("gold_dim_team"))
 
+    Pure DataFrame in, DataFrame out: no table reads, no writes. tests/test_gold.py drives it
+    with hand-built frames, and the oracle test replays every committed snapshot through it.
+    """
     previous = (
         fact.filter(F.col("snapshot_date") < F.lit(snapshot))
             .join(incoming.select("player_bk"), "player_bk", "left_semi")
@@ -127,7 +130,7 @@ def build_fact_rows(spark: SparkSession, cfg: GoldConfig, incoming: DataFrame, s
         .select(
             "player_bk", "snapshot_date", "team_key", *STATE_COLUMNS,
             "attr_hash", "change_type", "prev_snapshot_date",
-            F.lit(cfg.load_id).alias("load_id"), F.current_timestamp().alias("built_at"),
+            F.lit(load_id).alias("load_id"), F.current_timestamp().alias("built_at"),
         )
     )
 

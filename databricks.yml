@@ -6,7 +6,14 @@ include:
 
 variables:
   catalog:
-    default: workspace
+    description: Unity Catalog name. Created by the setup task if missing.
+    default: imaginex
+  schema:
+    default: nba
+  raw_dir:
+    default: /Volumes/${var.catalog}/${var.schema}/source_data
+  output_dir:
+    default: /Volumes/${var.catalog}/${var.schema}/output_files
 
 targets:
   dev:
@@ -14,5 +21,3 @@ targets:
     mode: development
     presets:
       name_prefix: ""
-    workspace:
-      host: https://dbc-32226ed4-84c3.cloud.databricks.com

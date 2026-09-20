@@ -2,20 +2,47 @@ resources:
   jobs:
     nba_pipeline:
       name: nba-players-pipeline
+      description: >
+        NBA players pipeline. Copies the committed CSVs into the source volume, then runs
+        bronze (raw copy), silver (typed + validated) and gold (star schema + current-state JSON)
+        for one source file. Rerunning with the same file is idempotent at every layer.
 
+      # Job-level parameters. Override from the CLI:
+      #   databricks bundle run nba_pipeline -t dev --params source_file=nba2k23-simulated.csv,on_failure=fail
       parameters:
         - name: source_file
           default: nba2k-full.csv
         - name: on_failure
-          default: quarantine
+          default: quarantine          # quarantine: keep bad rows aside and continue | fail: stop after writing them
 
       environments:
         - environment_key: default
           spec:
-            client: "2"           # without dependencies: pandas y pyspark are already included into serverless
+            client: "2"                # no extra dependencies: pyspark is already available on serverless
 
       tasks:
+
+        # 1. Copy the CSVs the bundle synced (data/raw) into the source volume. Skips files already there.
+        - task_key: setup_env
+          environment_key: default
+          spark_python_task:
+            python_file: ../jobs/setup_job.py
+            parameters:
+              - "--catalog"
+              - ${var.catalog}
+              - "--schema"
+              - ${var.schema}
+              - "--data-dir"
+              - ${workspace.file_path}/data/raw
+              - "--raw-dir"
+              - ${var.raw_dir}
+              - "--output-dir"
+              - ${var.output_dir}
+
+        # 2. Raw copy of one CSV into bronze_players_raw. Everything as text, replaceWhere by source_file.
         - task_key: bronze
+          depends_on:
+            - task_key: setup_env
           environment_key: default
           spark_python_task:
             python_file: ../jobs/bronze_job.py
@@ -24,22 +51,47 @@ resources:
               - ${workspace.file_path}/src
               - "--catalog"
               - ${var.catalog}
+              - "--schema"
+              - ${var.schema}
               - "--raw-dir"
-              - /Volumes/${var.catalog}/nba/source_data
+              - ${var.raw_dir}
               - "--source-file"
               - "{{job.parameters.source_file}}"
 
+        # 3. Parse, build keys, run quality rules. Clean rows to silver_players, the rest to quarantine.
         - task_key: silver
-          depends_on: [{ task_key: bronze }]
+          depends_on:
+            - task_key: bronze
           environment_key: default
           spark_python_task:
             python_file: ../jobs/silver_job.py
-            parameters: 
+            parameters:
               - "--src-dir"
               - ${workspace.file_path}/src
               - "--catalog"
               - ${var.catalog}
+              - "--schema"
+              - ${var.schema}
               - "--source-file"
-              - "{{job.parameters.source_file}}"  
+              - "{{job.parameters.source_file}}"
               - "--on-failure"
               - "{{job.parameters.on_failure}}"
+
+        # 4. Star schema, one snapshot at a time, plus the current-state JSON in the output volume.
+        - task_key: gold
+          depends_on:
+            - task_key: silver
+          environment_key: default
+          spark_python_task:
+            python_file: ../jobs/gold_job.py
+            parameters:
+              - "--src-dir"
+              - ${workspace.file_path}/src
+              - "--catalog"
+              - ${var.catalog}
+              - "--schema"
+              - ${var.schema}
+              - "--source-file"
+              - "{{job.parameters.source_file}}"
+              - "--output-dir"
+              - ${var.output_dir}
